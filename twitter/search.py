@@ -60,6 +60,7 @@ def search_tweets_indikator():
 		t_.append(t)
 		i +=1
 		if (i % 4)==0:
+			break
 			time.sleep(3)
 		
 	for t in t_:t.join()

@@ -609,17 +609,20 @@ def process_(status):
         
   
 class CustomStreamListener(tweepy.StreamListener):
-
-    def on_status(self, status):
-      #Process(process_,args=(status)).start()
-      process_(status)
-    def on_error(self, status_code):
-      print(sys.stderr, 'Telah terjadi error dengan kode:', status_code)
-      return True  # Don't kill the stream
-
-    def on_timeout(self):
-      print( sys.stderr, 'Timeout...')
-      return True  # Don't kill the stream
+  i = 0
+  def on_status(self, status):
+    #Process(process_,args=(status)).start()
+    i +=1
+    if i%60 ==0:
+      print("waiting...")
+      time.sleep(2) 
+    process_(status)
+  def on_error(self, status_code):
+    print(sys.stderr, 'Telah terjadi error dengan kode:', status_code)
+    return True  # Don't kill the stream
+  def on_timeout(self):
+    print( sys.stderr, 'Timeout...')
+    return True  # Don't kill the stream
 
 # ini keywordnya
 keyword_list = ['corona,covid,covid19,covid-19,korona,dampak corona']
