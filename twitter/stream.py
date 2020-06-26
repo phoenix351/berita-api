@@ -7,7 +7,7 @@ from search import gettweets_bykeyword
 from search import get_api
 from datetime import datetime,timedelta
 from Database import Database_connection as db_
-
+import time.sleep
 class Status(s):
   def insert_db(self):
     print("saving...")
@@ -612,10 +612,12 @@ def stream_artif(list_key):
   list_kt = []
   for key in list_key:
     for tanggal in tanggal_:
-      statuses = gettweets_bykeyword(api,key,tanggal,'recent',False,0,key)
+      statuses = gettweets_bykeyword(api,key,tanggal,'popular',False,0,key)
       for status in statuses :
         s = Status(status,key)
         Thread(target=s.insert_db).start()
+      print('waiting...')
+      time.sleep(5)
   
 if __name__ == '__main__':
   keyword_list = ['corona','covid','covid19','covid-19','korona','dampak corona','indonesia corona']

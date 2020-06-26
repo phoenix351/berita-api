@@ -31,7 +31,7 @@ def gettweets_bykeyword(api,keyword,tanggal,tipe,save=False,rentang=1,id_indikat
 	pop =[]
 	
 	sejak = (tanggal-timedelta(rentang)).strftime('%Y-%m-%d')
-	sampai = (tanggal+timedelta(1)).strftime('%Y-%m-%d')
+	sampai = (sejak+timedelta(1)).strftime('%Y-%m-%d')
 	print("api calling...")
 	try:
 		api_call = tweepy.Cursor(api.search, q=keyword,since=sejak,until=sampai,lang='id',result_type=tipe,tweet_mode='extended' ).items(100)
