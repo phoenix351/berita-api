@@ -18,8 +18,18 @@ def get_api():
 	return api
 
 def gettweets_bykeyword(api,keyword,tanggal,tipe,save=False,rentang=1,id_indikator=""):
+	"""
+	api = Tweepy. API instance
+	keyword = katakunci
+	tanggal = tanggal (max 7 hari kebelakang)
+	tipe = result tipe (recent,popular,mixed)
+	save = boolean disave apa tidak
+	rentang = rentang waktu kebelakang
+	id_indikator = indikator identifier
+	"""
+
 	pop =[]
-	tanggal = datetime.strptime(tanggal,'%d-%m-%Y')
+	
 	sejak = (tanggal-timedelta(rentang)).strftime('%Y-%m-%d')
 	sampai = (tanggal+timedelta(1)).strftime('%Y-%m-%d')
 	print("api calling...")
@@ -41,7 +51,7 @@ def gettweets_bykeyword(api,keyword,tanggal,tipe,save=False,rentang=1,id_indikat
 	return pop
 def search_tweets_indikator():
 	import time
-	tanggal = datetime.now().strftime('%d-%m-%Y')
+	tanggal = datetime.now()
 	api = get_api()
 	#ambil indikator
 	query_select = "select id_indikator, katakunci from katakunci_indikator"

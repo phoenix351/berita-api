@@ -3,7 +3,9 @@ import tweepy
 import csv
 import sys
 from Status import Status as s
-
+from search import gettweets_bykeyword
+from search import get_api
+from datetime import datetime,timedelta
 class Status(s):
   def insert_db(self):
     db = db_()
@@ -26,16 +28,6 @@ class Status(s):
       print(ex)
     db.tutup()
 
-# Fill the API Key
-consumer_key = "3xiq8lS3b7xIMNhtXo1zGxqry"
-consumer_secret = "SFq7oeFsRa9NAP7rp5ETXAPrGZpdlP3R9owDLrUkKdoB2kHnD2"
-access_token = "1237633057084952576-gYchMdjf8OH7bPheYP8PIa8QEzC85T"
-access_token_secret = "tZTGG6F5VmKwRMexmGzuh0AYP1hzsI6TwYeol3uHEBQjs"
-
-# Auth.
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
-api = tweepy.API(auth)
 
 
 
@@ -608,31 +600,18 @@ def process_(status):
               return 0
         
   
-class CustomStreamListener(tweepy.StreamListener):
-  i = 0
-  def on_status(self, status):
-    #Process(process_,args=(status)).start()
-    i +=1
-    if i%60 ==0:
-      print("waiting...")
-      time.sleep(2) 
-    process_(status)
-  def on_error(self, status_code):
-    print(sys.stderr, 'Telah terjadi error dengan kode:', status_code)
-    return True  # Don't kill the stream
-  def on_timeout(self):
-    print( sys.stderr, 'Timeout...')
-    return True  # Don't kill the stream
 
-# ini keywordnya
-keyword_list = ['corona,covid,covid19,covid-19,korona,dampak corona,indonesia corona']
 
-while True:
-  streamingAPI = tweepy.streaming.Stream(auth, CustomStreamListener())
-  try:
-    streamingAPI.filter(track=keyword_list)
-  except KeyboardInterrupt:
-    break
-  except:
-    continue
-  
+def stream_artif(list_key):
+  keyword_list = ['corona,covid,covid19,covid-19,korona,dampak corona,indonesia corona']
+  api = get_api()
+  tanggal_ = [(datetime.now()-timedelta(i)) for i in range(6)]
+  for key in list_key:
+    for tanggal in tanggal_:
+      print("get ",key," at ",tanggal)
+      Process(target=gettweets_bykeyword,args=(api,key,tanggal,'recent',True,0,key)).start()
+
+if __name__ == '__main__':
+  stream_artif()
+
+
