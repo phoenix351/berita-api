@@ -2,12 +2,20 @@ from threading import Thread
 import tweepy
 import csv
 import sys
-from Status import Status as s
-from search import gettweets_bykeyword
-from search import get_api
 from datetime import datetime,timedelta
-from Database import Database_connection as db_
 from time import sleep
+try:
+  from twitter.Status import Status as s
+  from twitter.search import gettweets_bykeyword
+  from twitter.search import get_api
+  from twitter.Database import Database_connection as db_
+except:
+  from Status import Status as s
+  from search import gettweets_bykeyword
+  from search import get_api
+  from Database import Database_connection as db_
+
+
 class Status(s):
   def insert_db(self):
     
@@ -587,41 +595,39 @@ def cek_wil(tup):
   return tf
 
 def process_(status,key):
-  if status.user.location:
-      if 'bharat' in status.user.location.lower():
+
+  if status.user_location:
+      if 'bharat' in status.user_location.lower():
         return 0 
-      if (len(status.user.location)>3) & cek_wil(status.user.location):
-        status_ = Status(status,key)
-        status_.insert_db()
+      if (len(status.user_location)>3) & cek_wil(status.user_location):
+        status.insert_db()
+        print("saved")
         return 0
   else:
-        if status.place:
-          if status.place.country_code:
-            if (status.place.country_code=='ID'):
-              status_ = Status(status,key)
-              status_.insert_db()
-              return 0
+        if status.country_code:
+          if (status.country_code=='ID'):
+            status.insert_db()
+            print("saved")
+            return 0
         
   
 
 
-def stream_artif(list_key):
+def stream_artif(key):
   
   api = get_api()
-  tanggal_ = [(datetime.now()-timedelta(i)) for i in range(6)]
-  list_kt = []
-  for key in list_key:
-    for tanggal in tanggal_:
-      statuses = gettweets_bykeyword(api,key,tanggal,'popular',False,0,key)
-      for status in statuses :
-        s = Status(status,key)
-        Thread(target=s.insert_db).start()
-      print('waiting...')
-      sleep(5)
+  tanggal = datetime.now()-timedelta(0)
+
+  statuses = gettweets_bykeyword(key,2,False,0,key,tanggal)
+  for status in statuses :
+    
+    Thread(target=status.insert_db,args=(1,)).start()
   
 if __name__ == '__main__':
   keyword_list = ['corona','covid','covid19','covid-19','korona','dampak corona','indonesia corona']
   #print(get_api().rate_limit_status())
-  stream_artif(keyword_list)
+  while True:
+    stream_artif(' OR '.join(keyword_list))
+    sleep(5)
 
 

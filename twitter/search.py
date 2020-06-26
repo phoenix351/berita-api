@@ -1,9 +1,17 @@
 from threading import Thread
-from Status import Status 
+
 import tweepy
 from datetime import datetime,timedelta
-from Database import Database_connection as dbx
 import sys
+
+try:
+	from twitter.Status import Status 
+	from twitter.Database import Database_connection as dbx
+except:
+	from Status import Status 
+	from Database import Database_connection as dbx
+
+
 # Fill the API Key
 def get_api():
 	consumer_key = "3xiq8lS3b7xIMNhtXo1zGxqry"
@@ -17,7 +25,7 @@ def get_api():
 	api = tweepy.API(auth)
 	return api
 
-def gettweets_bykeyword(api,keyword,tanggal,tipe,save=False,rentang=1,id_indikator=""):
+def gettweets_bykeyword(keyword,tipe,save=False,rentang=0,id_indikator="",tanggal=datetime.now()):
 	"""
 	api = Tweepy. API instance
 	keyword = katakunci
@@ -27,7 +35,9 @@ def gettweets_bykeyword(api,keyword,tanggal,tipe,save=False,rentang=1,id_indikat
 	rentang = rentang waktu kebelakang
 	id_indikator = indikator identifier
 	"""
-
+	t_ = ['popular','recent','mixed']
+	tipe = t_[int(tipe)]
+	api = get_api()
 	pop =[]
 	sejak_dt = tanggal-timedelta(rentang)
 	sampai_dt = sejak_dt+timedelta(1)
@@ -38,7 +48,8 @@ def gettweets_bykeyword(api,keyword,tanggal,tipe,save=False,rentang=1,id_indikat
 	print("api calling...")
 	
 	try:
-		api_call = tweepy.Cursor(api.search, q=keyword,since=sejak,until=sampai,lang='id',result_type=tipe,tweet_mode='extended' ).items(100)
+		api_call = tweepy.Cursor(api.search, q=keyword,since=sejak,
+			until=sampai,lang='id',result_type=tipe,tweet_mode='extended' ).items(100)
 
 	except:
 		return "error"
@@ -46,20 +57,21 @@ def gettweets_bykeyword(api,keyword,tanggal,tipe,save=False,rentang=1,id_indikat
 	    pop.append(tweet)
 	#it option save = True
 	
-	if save:
-		print("saving...")
-		status.insert_db()
-		return 0;
+	
 
 	
-	for p in pop:
-			status = Status(p,id_indikator)
+	for p in range(len(pop)):
+			status = Status(pop[p],id_indikator)
+			pop[p] = status
+			if save:
+				status.insert_db()
+				
 			
 	return pop
 def search_tweets_indikator():
 	import time
 	tanggal = datetime.now()
-	api = get_api()
+	
 	#ambil indikator
 	query_select = "select id_indikator, katakunci from katakunci_indikator"
 	db = dbx()
@@ -72,14 +84,12 @@ def search_tweets_indikator():
 		k = keyword #ambil str dri tuple
 		#membuah thread
 		
-		t = Thread(target=gettweets_bykeyword,args=(api,k,tanggal,"recent",True,6,id_))
+		t = Thread(target=gettweets_bykeyword,args=(k,"recent",True,6,id_))
 		t.start()
 		t_.append(t)
 		i +=1
-		if (i % 4)==0:
-			break
-			time.sleep(3)
-		
+		if i==60:
+			sleep(15*60)
 	for t in t_:t.join()
 
 	db.tutup()
@@ -90,9 +100,11 @@ if __name__ == '__main__':
 	api = get_api()
 	#search_tweets_indikator()
 	tanggal = datetime.now()-timedelta(3)
-	res = gettweets_bykeyword(api,'corona',tanggal,'recent',False)
+	keyword='jokowi'
+	res = gettweets_bykeyword(keyword,0,False,0,keyword,tanggal)
 	for r in res:
-		print(r)
+		print("+++++++++++++++++++++++++++++++")
+		print(r.status_text)
 	
 	
 

@@ -1,13 +1,16 @@
 from datetime import datetime
 import re
-from Database import Database_connection as db_
+try:
+  from twitter.Database import Database_connection as db_
+except:
+  from Database import Database_connection as db_
 def bersih(teks):
   
   #remove url 
   teks = re.sub(r'&\S*;', ' ', teks, flags=re.MULTILINE)
   teks = re.sub(r'\n', ' ', teks, flags=re.MULTILINE)
   teks = re.sub(r'https*:\/\/[\S]*', ' ', teks, flags=re.MULTILINE)
-  teks = re.sub(r'RT\s@\w+:', ' ', teks, flags=re.MULTILINE)
+  #teks = re.sub(r'RT\s@\w+:', ' ', teks, flags=re.MULTILINE)
   return teks
 
 class Status:
@@ -31,7 +34,7 @@ class Status:
 
     #definis variable yang gamungkin null
     self.id_indikator = id_indikator
-    self.status_posted = status.created_at
+    self.status_posted = str(status.created_at)
     self.user_desc = bersih(str(status.user.description))
     self.user_status_count = status.user.statuses_count
     self.user_name = status.user.screen_name
@@ -60,10 +63,10 @@ class Status:
       self.country_code = status.place.country_code
     except:
       self.country_code = None
-  def insert_db(self):
+  def insert_db(self,table=0):
     db = db_()
     query = '''
-    INSERT INTO `tweets` 
+    INSERT INTO `tweets`
     (`id_indikator`,`status_posted`, `user_desc`, `user_status_count`, `user_name`, 
     `user_target_reply`, `user_verified`, `status_text`, `status_hashtags`, 
     `user_location`, `user_following`, `user_followers`, `retweets`, 
@@ -73,12 +76,22 @@ class Status:
              self.user_target_reply,self.user_verified,self.status_text,self.status_hashtags,
              self.user_location,self.user_following,self.user_followers,self.status_retweets,
              self.status_coordinate,self.country_code)
+    if table == 1:
+      query = '''
+      INSERT INTO `corona_twit`
+      (`id_indikator`,`status_posted`, `user_desc`, `user_status_count`, `user_name`, 
+      `user_target_reply`, `user_verified`, `status_text`, `status_hashtags`, 
+      `user_location`, `user_following`, `user_followers`, `retweets`, 
+      `coordinate`, `country_code`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+      '''
+
     try:
       db.kursor.execute(query,param)
       db.koneksi.commit()
     except Exception as ex:
       db.koneksi.rollback()
       print(ex)
+      raise "error"
     db.tutup()
     
 

@@ -1,5 +1,6 @@
 import flask 
 import json
+from datetime import datetime,timedelta
 """import api.analisis_berita as analisis_berita
 import api.ner_sentimen as ner_sentimen
 from twitter.search import gettweets_bykeyword
@@ -295,16 +296,29 @@ def getsum_sentimen():
 		return err
 
 @app.route('/twitter/gettweets_bykeywords',methods=['GET'])
-def gettweets(keyword,tipe):
+def gettweets():
 	
 	args_ = flask.request.args
 	if ('keyword' not in args_) or ('tipe' not in args_):
 		err = app.response_class(
-			        	response=json.dumps({'pesan' : 'maaf argumen kategori / indikator tidak ada'}),
+			        	response=json.dumps({'pesan' : 'maaf argumen keyword / tipe tidak ada'}),
 				        status=200,
 				        mimetype='application/json')
 		return err
-	hasil = gettweets_bykeyword('corona','popular',False,0,"corona",tanggal)
+	
+	try:
+		tipe = int(args_['tipe'])
+		keyword = args_['keyword']
+	except:
+		err = app.response_class(
+			        	response=json.dumps({'pesan' : 'maaf argumen keyword / tipe tidak sesuai format'}),
+				        status=200,
+				        mimetype='application/json')
+		return err
+	
+	tanggal = datetime.now() - timedelta(1)
+	hasil = gettweets_bykeyword(keyword,tipe,False,0,keyword,tanggal)
+	hasil = [h.__dict__ for h in hasil]
 	response = app.response_class(
 			response=json.dumps(hasil),
 			status=200,
