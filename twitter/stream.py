@@ -1,4 +1,4 @@
-
+from threading import Thread
 import tweepy
 import csv
 import sys
@@ -6,7 +6,7 @@ from Status import Status as s
 from search import gettweets_bykeyword
 from search import get_api
 from datetime import datetime,timedelta
-import concurrent.futures
+from Database import Database_connection as db_
 
 class Status(s):
   def insert_db(self):
@@ -612,25 +612,14 @@ def stream_artif(list_key):
   list_kt = []
   for key in list_key:
     for tanggal in tanggal_:
-      list_kt.append((key,tanggal))
-      
-
-  with concurrent.futures.ThreadPoolExecutor() as executor:
-    # Start the load operations and mark each future with its URL
-    future_to_url = {executor.submit(gettweets_bykeyword,api,key,tanggal,'recent',False,0,key): (key,tanggal) for key,tanggal in list_kt}
-    for future in concurrent.futures.as_completed(future_to_url):
-        url = future_to_url[future]
-        try:
-            data = future.result()
-            for row in data :
-              process_(row,key)
-        except Exception as exc:
-            print('%r generated an exception: %s' % (url, exc))
-        else:
-            print('%r page is %d bytes' % (url, len(data)))
-
+      statuses = gettweets_bykeyword(api,key,tanggal,'recent',False,0,key)
+      for status in statuses :
+        s = Status(status,key)
+        Thread(target=s.insert_db).start()
+  
 if __name__ == '__main__':
-  keyword_list = ['corona,covid,covid19,covid-19,korona,dampak corona,indonesia corona']
+  keyword_list = ['corona','covid','covid19','covid-19','korona','dampak corona','indonesia corona']
+  #print(get_api().rate_limit_status())
   stream_artif(keyword_list)
 
 

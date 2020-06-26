@@ -44,11 +44,12 @@ def gettweets_bykeyword(api,keyword,tanggal,tipe,save=False,rentang=1,id_indikat
 	
 	if save:
 		print("saving...")
-		for p in pop:
-			status = Status(p,id_indikator)
-			status.insert_db()
+		status.insert_db()
 
-		
+	
+	for p in pop:
+			status = Status(p,id_indikator)
+			
 	return pop
 def search_tweets_indikator():
 	import time
@@ -82,8 +83,11 @@ def search_tweets_indikator():
 
 if __name__ == '__main__':
 	api = get_api()
-	search_tweets_indikator()
-	#gettweets_bykeyword(api,'ekspor','25-06-2020','recent',True)
+	#search_tweets_indikator()
+	tanggal = datetime.now()-timedelta(3)
+	res = gettweets_bykeyword(api,'corona',tanggal,'recent',False)
+	for r in res:
+		print(r)
 	
 	
 
