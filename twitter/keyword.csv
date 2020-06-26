@@ -1,0 +1,114 @@
+IND001,ekspor OR impor OR neraca perdagangan
+IND010,Indeks Tendensi Konsumen (ITK) OR indeks tendensi konsumen OR ITK OR tendensi konsumen
+IND100,ketimpangan pendapatan (ukuran bank dunia) OR ketimpangan bank dunia
+IND101,koefisien gini OR gini ratio OR rasio gini OR tingkat ketimpangan pendapatan OR ketimpangan pendapatan OR ketimpangan
+IND102,angkatan kerja OR pengangguran OR penganggur OR penduduk usia kerja OR jumlah penduduk yang bekerja OR jumlah penduduk bekerja OR jumlah pengangguran OR jumlah angkatan kerja OR jumlah penduduk angkatan kerja OR jumlah penduduk bukan angkatan kerja
+IND103,angka setengah pengangguran OR setengah penganggur OR setengah pengangguran OR pekerja setengah penganggur
+IND104,Tingkat Partisipasi Angkatan Kerja (TPAK) OR tingkat partisipasi angkatan kerja OR TPAK
+IND105,Tingkat Pengangguran Terbuka (TPT) OR tingkat pengangguran terbuka OR TPT OR tingkat pengangguran
+IND106,tingkat kesempatan kerja OR kesempatan kerja
+IND107,rasio ketergantungan
+IND108,rata-rata upah harian buruh bangunan OR upah nomial harian buruh bangunan
+IND109,rata-rata upah harian buruh tani OR upah nominal harian buruh tani
+IND011,Indeks Indikator Kini (IIK) OR indeks indikator kini OR IIK
+IND110,Indeks Pembangunan Manusia (IPM) OR indeks pembangunan manusia OR IPM
+IND111,rata-rata pengeluaran perkapita riil yang disesuaikan (daya beli) OR daya beli masyarakat
+IND112,Indeks Pembangunan Gender (IPG) OR indeks pembangunan gender OR IPG
+IND113,Indeks Pemberdayaan Gender (IDG) OR indeks pemberdayaan gender OR IDG
+IND114,Potensi Desa (Podes) OR Podes OR 
+IND012,Indeks Indikator Mendatang (IIM) OR indeks indikator mendatang OR IIM
+IND013,Nilai Tukar Petani (NTP) OR nilai tukar petani OR NTP OR Nilai Tukar Usaha Rumah Tangga Pertanian (NTUP) OR nilai tukar usaha rumah tangga pertanian OR NTUP
+IND014,Indeks Harga yang Diterima Petani (It) OR indeks harga yang diterima petani OR It
+IND015,Indeks Harga yang Dibayar Petani (Ib) OR indeks harga yang dibayar petani OR Ib
+IND016,rata-rata harga gabah OR harga gabah OR Rata-rata Harga Gabah Kering Giling (GKG) OR harga gabah kering giling OR harga GKG OR Rata-rata Harga Gabah Kering Panen (GKP) OR harga gabah kering panen OR harga GKP OR Rata-rata Harga Gabah Kualitas Rendah (GKR) OR harga gabah kualitas rendah OR harga GKR
+IND017,Rata-Rata Lama Menginap Tamu (Asing dan Dalam Negeri) OR rata-rata lama menginap tamu asing OR rata-rata lama menginap tamu Indonesia OR rata-rata lama menginap tamu
+IND018,rata-rata lama tinggal wisatawan mancanegara OR rata-rata lama tinggal wisman OR rata-rata lama tinggal wisatawan
+IND019,rata-rata pengeluaran per wisman per hari per kunjungan
+IND002,Indeks Harga Perdagangan Besar (IHPB) OR indeks harga perdagangan besar OR IHPB
+IND020,Tingkat Penghunian Kamar (TPK) OR tingkat penghunian kamar OR TPK
+IND021,penerimaan dari wisatawan mancanegara OR penerimaan dari wisman OR jumlah kunjungan wisatawan mancanegara OR jumlah kunjungan wisman OR kunjungan wisatawan mancanegara OR kunjungan wisman OR jumlah wisatawan mancanegara OR jumlah wisman 
+IND022,Produk Domestik Bruto (PDB) OR Produk Domestik Regional Bruto (PDRB) OR produk domestik bruto OR produk domestik regional bruto OR PDB OR PDRB OR PDB atas dasar harga berlaku OR PDB atas dasar harga konstan OR PDB ADHB OR PDB ADHK OR PDRB atas dasar harga berlaku OR PDRB atas dasar harga konstan OR PDRB ADHB OR PDRB ADHK
+IND023,laju pertumbuhan PDB OR laju pertumbuhan PDRB OR pertumbuhan ekonomi OR laju pertumbuhan ekonomi
+IND024,indeks implisit
+IND025,distribusi persentase PDB OR distribusi persentase PDRB OR distribusi PDB OR distribusi PDRB
+IND026,PDB per kapita OR PDRB per kapita
+IND027,rasio modal-output marginal OR ICOR
+IND028,rasio tenaga kerja-output marginal OR ILOR
+IND029,pertumbuhan produksi industri pengolahan OR pertumbuhan produksi industri OR PPI OR Industri Kecil Menengah (IKM) OR industri kecil menengah OR IKM OR Industri Besar Sedang (IBS) OR industri besar sedang OR IBS
+IND003,Indeks Harga Konsumen (IHK) OR indeks harga konsumen OR IHK
+IND030,indeks produksi industri pengolahan
+IND031,rasio penumpang per pesawat udara OR RPPU OR penumpang per pesawat OR jumlah penumpang angkutan udara OR pengguna angkutan udara OR jumlah pengguna angkutan udara
+IND032,rasio barang per pesawat udara OR RBPU OR jumlah barang yang diangkut OR rasio jumlah barang per pesawat
+IND033,rasio penumpang per kapal OR RPK OR jumlah penumpang angkutan laut OR penumpang angkutan laut
+IND034,rasio barang per kapal OR RBK. jumlah barang yang dibongkar OR jumlah barang yang dimuat OR jumlah barang yang diangkut naik OR jumlah barang yang diangkut turun
+IND035,rasio penduduk terhadap mobil penumpang OR RPMP
+IND036,rasio penduduk terhadap kendaraan bermotor OR RPKB
+IND037,rasio penduduk terhadap bus umum OR RPBU
+IND038,jumlah kendaraan bermotor
+IND039,panjang jalan
+IND004,inflasi OR deflasi OR laju inflasi OR inflasi bulanan OR inflasi tahunan OR inflasi tahun kalender OR inflasi inti OR inflasi volatile food OR inflasi administered prices
+IND040,rasio kendaraan bermotor terhadap panjang jalan OR RKBPJ
+IND041,Angka Melek Huruf (AMH) OR angka melek huruf OR AMH
+IND042,Angka Partisipasi Kasar (APK) OR angka partisipasi kasar OR APK
+IND043,Angka Partisipasi Murni (APM) OR angka partisipasi murni OR APM
+IND044,Angka Partisipasi Sekolah (APS) OR angka partisipasi sekolah OR APS
+IND045,rata-rata lama sekolah OR tingkat pendidikan
+IND046,angka putus sekolah
+IND047,rasio murid-guru
+IND048,pengeluaran publik masuk pendidikan sebagai persentase dari total belanja pemerintah
+IND049,persentase balita yang ditolong penolong kelahiran OR persentase bayi lahir ditolong nakes OR persentase bayi lahir ditolong non-nakes
+IND005,Indeks Konsumsi Rumah Tangga (IKRT) OR indeks konsumsi rumah tangga OR IKRT
+IND050,cakupan imunisasi
+IND051,persentase balita yang sudah diimunisasi lengkap
+IND052,persentase penduduk sakit dengan pengobatan sendiri
+IND053,persentase penduduk sakit yang konsultasi ke tenaga medis
+IND054,persentase penduduk sakit yang menjalani rawat inap di RS/klinik yang menyediakan tenaga medis OR persentase penduduk sakit yang menjalani rawat inap di rumah sakit yang menyediakan tenaga medis OR persentase penduduk sakit yang menjalani rawat inap di RS yang menyediakan tenaga medis OR persentase penduduk sakit yang menjalani rawat inap di klinik yang menyediakan tenaga medis
+IND055,rata-rata jumlah anak yang pernah dilahirkan/paritas
+IND056,Anak Lahir Hidup (ALH) OR anak lahir hidup OR ALH
+IND057,Anak Masih Hidup (AMH) OR anak masih hidup OR AMH
+IND058,angka kelahiran kasar OR CBR
+IND059,angka kelahiran menurut umur OR ASFR
+IND006,inflasi perdesaan OR deflasi perdesaan
+IND060,angka kelahiran total OR TFR
+IND061,angka kelahiran umum OR GFR
+IND062,angka reproduksi neto OR NRR
+IND063,angka reproduksi kasar OR GRR
+IND064,rasio anak-ibu
+IND065,Umur Kawin Pertama (UKP) OR umur kawin pertama OR UKP
+IND066,angka prevalensi pemakaian kontrasepsi
+IND067, persentase pemakai suatu cara KB menurut alat/cara KB OR PUS memakai alat/cara KB
+IND068,persentase pernah pakai KB OR persentase PUS yang pernah memakai suatu cara KB
+IND069,Angka Kematian Anak (AKA) OR angka kematian anak OR AKA
+IND007,Indeks Tendensi Bisnis (ITB) OR indeks tendensi bisnis OR ITB OR tendensi bisnis
+IND070,Angka Kematian Balita (AKBa) OR angka kematian balita OR AKBa
+IND071,Angka Kematian Bayi (AKB) OR angka kematian bayi OR AKB
+IND072,Angka Kematian Ibu (AKI) OR angka kematian ibu OR AKI
+IND073,Angka Kematian Kasar (AKK) OR angka kematian kasar OR AKK
+IND074,Angka Kematian Menurut Usia (AKMU) OR angka kematian menurut usia OR AKMU
+IND075,angka kematian neo-natal OR AKNeo
+IND076,angka kematian post neo-natal OR AKPNeo
+IND077,Angka Harapan Hidup (AHH) OR angka harapan hidup OR AHH OR harapan hidup
+IND078,angka kesakitan OR angka morbiditas OR morbiditas OR persentase penduduk yang mempunyai keluhan kesehatan
+IND079,rata-rata lama sakit
+IND008,Indeks Indikator Kini (IIK) OR indeks indikator kini OR IIK
+IND080,tingkat prevalensi
+IND081,insidensi
+IND082,angka fatalitas kasus
+IND083,angka daya tular
+IND084,tingkat serangan
+IND085,kepadatan penduduk OR jumlah penduduk OR jumlah populasi penduduk
+IND086,laju pertumbuhan penduduk OR pertumbuhan penduduk
+IND087,rasio jenis kelamin OR sex ratio OR SR
+IND088,distribusi penduduk menurut wilayah OR persentase penduduk menurut wilayah
+IND089,angka migrasi masuk OR migrasi masuk
+IND009,Indeks Indikator Mendatang (IIM) OR indeks indikator mendatang OR IIM
+IND090,angka migrasi keluar OR migrasi keluar
+IND091,angka migrasi neto OR migrasi neto
+IND092,migrasi seumur hidup OR migrasi semasa hidup
+IND093,angka migrasi risen OR migrasi risen
+IND094,angka migrasi total OR migrasi total
+IND095,Garis Kemiskinan (GK) OR garis kemiskinan OR garis kemiskinan makanan OR garis kemiskinan bukan makanan OR garis kemiskinan nonmakanan OR GK OR GKM OR GKBM OR GKNM OR kemiskinan OR angka kemiskinan
+IND096,persentase penduduk miskin OR persentase kemiskinan OR jumlah penduduk miskin OR tingkat kemiskinan OR jumlah masyarakat miskin
+IND097,indeks kedalaman kemiskinan OR kedalaman kemiskinan
+IND098,indeks keparahan kemiskinan OR keparahan kemiskinan
+IND099,Indeks Kemiskinan Manusia (IKM) OR indeks kemiskinan manusia OR IKM
