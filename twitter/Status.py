@@ -35,7 +35,7 @@ class Status:
     #definis variable yang gamungkin null
     self.id_indikator = id_indikator
     self.status_posted = str(status.created_at)
-    self.user_desc = bersih(str(status.user.description))
+    self.user_desc = bersih(str(status.user.description)).__repr__()
     self.user_status_count = status.user.statuses_count
     self.user_name = status.user.screen_name
     try:
@@ -44,9 +44,9 @@ class Status:
       self.user_target_reply = None
     self.user_verified = status.user.verified
     try:
-      self.status_text = bersih(status.full_text)
+      self.status_text = bersih(status.full_text).__repr__()
     except:
-      self.status_text =  bersih(status.text)
+      self.status_text =  bersih(status.text).__repr__()
     self.status_hashtags = str(status.entities['hashtags'])
     self.user_following = status.user.friends_count
     self.user_followers = status.user.followers_count
