@@ -2,7 +2,29 @@ from multiprocessing import Process
 import tweepy
 import csv
 import sys
-from Status import Status
+from Status import Status as s
+
+class Status(s):
+  def insert_db(self):
+    db = db_()
+    query = '''
+    INSERT INTO `corona_twit` 
+    (`id_indikator`,`status_posted`, `user_desc`, `user_status_count`, `user_name`, 
+    `user_target_reply`, `user_verified`, `status_text`, `status_hashtags`, 
+    `user_location`, `user_following`, `user_followers`, `retweets`, 
+    `coordinate`, `country_code`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+    '''
+    param = (self.id_indikator,self.status_posted,self.user_desc,self.user_status_count,self.user_name,
+             self.user_target_reply,self.user_verified,self.status_text,self.status_hashtags,
+             self.user_location,self.user_following,self.user_followers,self.status_retweets,
+             self.status_coordinate,self.country_code)
+    try:
+      db.kursor.execute(query,param)
+      db.koneksi.commit()
+    except Exception as ex:
+      db.koneksi.rollback()
+      print(ex)
+    db.tutup()
 
 # Fill the API Key
 consumer_key = "3xiq8lS3b7xIMNhtXo1zGxqry"
@@ -574,7 +596,7 @@ def process_(status):
       if 'bharat' in status.user.location.lower():
         return 0 
       if (len(status.user.location)>3) & cek_wil(status.user.location):
-        status_ = Status(status)
+        status_ = Status(status,"c")
         status_.insert_db()
         return 0
   else:

@@ -27,7 +27,7 @@ class Status:
   status_coordinate = None
   country_code = None
   '''
-  def __init__(self,status,id_indikator):
+  def __init__(self,status,id_indikator=""):
 
     #definis variable yang gamungkin null
     self.id_indikator = id_indikator
