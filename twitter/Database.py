@@ -17,6 +17,7 @@ class Database_connection:
 	            passwd=self.password,
 	            database=self.db
 	        )
+		self.koneksi.set_character_set('utf8mb4')
 		self.kursor = self.koneksi.cursor()
 	def tutup(self):
 		self.koneksi.close()
