@@ -10,10 +10,10 @@ try:
   from twitter.search import get_api
   from twitter.Database import Database_connection as db_
 except:
-  import Status.Status as s
-  import search.gettweets_bykeyword as gettweets_bykeyword
-  import search.get_api as get_api
-  import Database.Database_connection as db_
+  from Status import Status as s
+  from search import gettweets_bykeyword
+  from search import get_api
+  from Database import Database_connection as db_
 
 
 class Status(s):
