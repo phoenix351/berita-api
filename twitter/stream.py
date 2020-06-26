@@ -625,7 +625,7 @@ class CustomStreamListener(tweepy.StreamListener):
     return True  # Don't kill the stream
 
 # ini keywordnya
-keyword_list = ['corona,covid,covid19,covid-19,korona,dampak corona']
+keyword_list = ['corona,covid,covid19,covid-19,korona,dampak corona,indonesia corona']
 
 while True:
   streamingAPI = tweepy.streaming.Stream(auth, CustomStreamListener())
