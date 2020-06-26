@@ -7,7 +7,7 @@ from search import gettweets_bykeyword
 from search import get_api
 from datetime import datetime,timedelta
 from Database import Database_connection as db_
-import time.sleep
+from time import sleep
 class Status(s):
   def insert_db(self):
     print("saving...")
@@ -617,7 +617,7 @@ def stream_artif(list_key):
         s = Status(status,key)
         Thread(target=s.insert_db).start()
       print('waiting...')
-      time.sleep(5)
+      sleep(5)
   
 if __name__ == '__main__':
   keyword_list = ['corona','covid','covid19','covid-19','korona','dampak corona','indonesia corona']
