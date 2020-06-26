@@ -3,9 +3,10 @@ class Database_connection:
 
 	#host = '192.168.43.7'
 	host = 'localhost'
-	user = 'root'
+	user='ponimin'
+	#user = 'root'
 	#password = 'SialanWLupa3@@'
-	password = ''
+	password = '1234'
 	#db = 'berita_db'
 	db = 'skripsi_db'
 
