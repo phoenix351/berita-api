@@ -603,7 +603,7 @@ def process_(status):
 
 
 def stream_artif(list_key):
-  keyword_list = ['corona,covid,covid19,covid-19,korona,dampak corona,indonesia corona']
+  
   api = get_api()
   tanggal_ = [(datetime.now()-timedelta(i)) for i in range(6)]
   for key in list_key:
@@ -612,6 +612,7 @@ def stream_artif(list_key):
       Process(target=gettweets_bykeyword,args=(api,key,tanggal,'recent',True,0,key)).start()
 
 if __name__ == '__main__':
-  stream_artif()
+  keyword_list = ['corona,covid,covid19,covid-19,korona,dampak corona,indonesia corona']
+  stream_artif(keyword_list)
 
 
