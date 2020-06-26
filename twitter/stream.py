@@ -1,4 +1,4 @@
-from multiprocessing import Process
+
 import tweepy
 import csv
 import sys
@@ -6,8 +6,11 @@ from Status import Status as s
 from search import gettweets_bykeyword
 from search import get_api
 from datetime import datetime,timedelta
+import concurrent.futures
+
 class Status(s):
   def insert_db(self):
+    print("saving...")
     db = db_()
     query = '''
     INSERT INTO `corona_twit` 
@@ -583,19 +586,19 @@ def cek_wil(tup):
   tf = tup.lower() in ''.join(list_wilayah)
   return tf
 
-def process_(status):
+def process_(status,key):
   if status.user.location:
       if 'bharat' in status.user.location.lower():
         return 0 
       if (len(status.user.location)>3) & cek_wil(status.user.location):
-        status_ = Status(status,"c")
+        status_ = Status(status,key)
         status_.insert_db()
         return 0
   else:
         if status.place:
           if status.place.country_code:
             if (status.place.country_code=='ID'):
-              status_ = Status(status)
+              status_ = Status(status,key)
               status_.insert_db()
               return 0
         
@@ -606,10 +609,25 @@ def stream_artif(list_key):
   
   api = get_api()
   tanggal_ = [(datetime.now()-timedelta(i)) for i in range(6)]
+  list_kt = []
   for key in list_key:
     for tanggal in tanggal_:
-      print("get ",key," at ",tanggal)
-      Process(target=gettweets_bykeyword,args=(api,key,tanggal,'recent',True,0,key)).start()
+      list_kt.append((key,tanggal))
+      
+
+  with concurrent.futures.ThreadPoolExecutor() as executor:
+    # Start the load operations and mark each future with its URL
+    future_to_url = {executor.submit(gettweets_bykeyword,api,key,tanggal,'recent',False,0,key): (key,tanggal) for key,tanggal in list_kt}
+    for future in concurrent.futures.as_completed(future_to_url):
+        url = future_to_url[future]
+        try:
+            data = future.result()
+            for row in data :
+              process_(row,key)
+        except Exception as exc:
+            print('%r generated an exception: %s' % (url, exc))
+        else:
+            print('%r page is %d bytes' % (url, len(data)))
 
 if __name__ == '__main__':
   keyword_list = ['corona,covid,covid19,covid-19,korona,dampak corona,indonesia corona']

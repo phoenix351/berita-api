@@ -41,8 +41,9 @@ def gettweets_bykeyword(api,keyword,tanggal,tipe,save=False,rentang=1,id_indikat
 	for tweet in api_call:
 	    pop.append(tweet)
 	#it option save = True
-	print("saving...")
+	
 	if save:
+		print("saving...")
 		for p in pop:
 			status = Status(p,id_indikator)
 			status.insert_db()
