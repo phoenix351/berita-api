@@ -10,7 +10,7 @@ from Database import Database_connection as db_
 from time import sleep
 class Status(s):
   def insert_db(self):
-    print("saving...")
+    
     db = db_()
     query = '''
     INSERT INTO `corona_twit` 

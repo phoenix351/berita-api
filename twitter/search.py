@@ -30,7 +30,7 @@ def gettweets_bykeyword(api,keyword,tanggal,tipe,save=False,rentang=1,id_indikat
 
 	pop =[]
 	sejak_dt = tanggal-timedelta(rentang)
-	sampai_dt = sejak+timedelta(1)
+	sampai_dt = sejak_dt+timedelta(1)
 
 	sejak = (sejak_dt).strftime('%Y-%m-%d')
 	sampai = (sampai_dt).strftime('%Y-%m-%d')
@@ -49,6 +49,7 @@ def gettweets_bykeyword(api,keyword,tanggal,tipe,save=False,rentang=1,id_indikat
 	if save:
 		print("saving...")
 		status.insert_db()
+		return 0;
 
 	
 	for p in pop:
