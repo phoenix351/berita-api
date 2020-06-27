@@ -628,6 +628,6 @@ if __name__ == '__main__':
   #print(get_api().rate_limit_status())
   while True:
     stream_artif(' OR '.join(keyword_list))
-    sleep(5)
+    sleep(60*15)
 
 
