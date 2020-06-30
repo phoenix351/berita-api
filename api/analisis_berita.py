@@ -28,17 +28,17 @@ def getberitaby_keyword(keyword,start,end,limit,offset=0):
 	hasil = db.kursor.fetchall()
 	k = []
 	for baris in hasil:
-			objek ={
+		print(baris)
+		objek ={
 				'id_berita':baris[0],
-				'tag':baris[1],
-				'judul':baris[2],
-				'penulis':baris[3],
-				'sumber':baris[4],
-				'waktu':baris[5],
-				'isi':baris[6]
+				'tag':baris[3],
+				'judul':baris[1],
+				'sumber':baris[5],
+				'waktu':baris[2],
+				'isi':baris[4]
 
 			}
-			k.append(objek)
+		k.append(objek)
 	db.koneksi.close()
 	return k
 def getsum_beritabysumber(start,end):

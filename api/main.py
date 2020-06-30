@@ -7,7 +7,8 @@ from twitter.search import gettweets_bykeyword
 import api.analisis_berita as analisis_berita
 import api.ner_sentimen as ner_sentimen
 from twitter.search import gettweets_bykeyword
-
+from datetime import datetime,timedelta
+from collections import Counter
 app = flask.Flask(__name__)
 
 @app.route('/get_beritadetail',methods=['GET'])
@@ -304,7 +305,39 @@ def gettweets(keyword,tipe):
 				        status=200,
 				        mimetype='application/json')
 		return err
-	hasil = gettweets_bykeyword('corona','popular',False,0,"corona",tanggal)
+	tanggal_list = [(datetime.now()-timedelta(i))for i in range(7)]
+	keyword = args_['keyword']
+	try:
+		tipe = int(args_['tipe'])
+	except:
+		tipe = 1
+	i = 0
+	#hasil_list = []
+	jumlah_harian = []
+	lokasi = []
+	for tanggal in tanggal_list:
+
+		hasil = gettweets_bykeyword(keyword,2,False,0,keyword,tanggal)	
+		#hasil_list.extend(hasil)
+		for h in hasil:
+			if str(h.provinsi) != 'None':
+				lokasi.append(h.provinsi)
+		harian = {
+		'tanggal':tanggal,
+		'jumlah':len(hasil)
+		}
+		jumlah_harian.append(harian)
+	lokasi = Counter(lokasi)
+	popular = gettweets_bykeyword(keyword,0,False,6,keyword)[0:10]
+	popular_today = gettweets_bykeyword(keyword,0,False,0,keyword)[0:10]
+	#jumlah_total = len(hasil)
+	hasil = {
+	'jumlah_harian':jumlah_harian,
+	'popular':popular.__dict__,
+	'popular_today':popular_today.__dict__,
+	'lokasi':lokasi
+	}
+
 	response = app.response_class(
 			response=json.dumps(hasil),
 			status=200,

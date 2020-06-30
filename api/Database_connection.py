@@ -17,3 +17,5 @@ class Database_connection:
 	            database=self.db
 	        )
 		self.kursor = self.koneksi.cursor()
+	def tutup(self):
+		self.koneksi.close()

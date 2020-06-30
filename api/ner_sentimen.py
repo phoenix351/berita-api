@@ -6,7 +6,7 @@ def getsum_sentimen():
 	query = """
 	select distinct(sentimen),count(*) as jumlah
 	from sentimen
-	where sentimen = 'isi'
+	where jenis = 'isi'
 	group by sentimen
 	"""
 	try:
@@ -29,12 +29,13 @@ def getsentimen_byind(indikator):
 	db = db_()
 	param = (('%'+indikator+'%'),)
 	query = """
-	select distinct(sentimen),count(*) as jumlah
+	select distinct(sentimen) as sentimen,count(*) as jumlah
 	from sentimen
-	where sentimen ='isi' and indikator like ? 
+	where jenis='isi' and indikator like %s 
 	group by sentimen
 	order by sentimen desc
 	"""
+
 	try:
 		db.kursor.execute(query,param)
 		#db.kursor.execute('select distinct(sumber) from berita_detail')
@@ -43,6 +44,7 @@ def getsentimen_byind(indikator):
 	hasil = db.kursor.fetchall()
 	k = []
 	for baris in hasil:
+		
 		objek = {
 		'sentimen':baris[0],
 		'jumlah':baris[1]
@@ -53,11 +55,11 @@ def getsentimen_byind(indikator):
 	return k
 def getsentimenkutipan_byind(indikator):
 	db = db_()
-	param = (('%'+indikator+'%'),)
+	param = ('%'+indikator+'%',)
 	query = """
-	select distinct(sentimen),count(*) as jumlah
+	select distinct(sentimen) as sentimen,count(*) as jumlah
 	from sentimen
-	where sentimen='kutipan' and indikator like ?
+	where jenis='kutipan' and indikator like %s
 	group by sentimen
 	order by sentimen desc
 	"""
@@ -81,7 +83,7 @@ def getsumner_byentitas(jenis,indikator):
 	query = '''
 	select entitas, sum(jumlah) as jumlah 
 	from sum_ner
-	where jenis_entitas like ? and  indikator like ?
+	where jenis_entitas like %s and  indikator like %s
 	group by entitas
 	order by jumlah desc
 	limit 10

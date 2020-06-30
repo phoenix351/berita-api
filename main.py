@@ -1,4 +1,5 @@
 import flask 
+#import simplejson as json
 import json
 from datetime import datetime,timedelta
 """import api.analisis_berita as analisis_berita
@@ -8,6 +9,12 @@ from twitter.search import gettweets_bykeyword
 import api.analisis_berita as analisis_berita
 import api.ner_sentimen as ner_sentimen
 from twitter.search import gettweets_bykeyword
+from twitter.search import analisis
+
+
+from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
+from operator import itemgetter
 
 app = flask.Flask(__name__)
 
@@ -36,7 +43,7 @@ def get_beritadetail():
 				batas = 100
 			hasil = analisis_berita.getberitaby_keyword(katakunci,start,end,batas,0)
 			response = app.response_class(
-			        	response=json.dumps(hasil),
+			        	response=json.dumps(hasil,default=str),
 				        status=200,
 				        mimetype='application/json')
 			return response		
@@ -68,7 +75,7 @@ def getsum_sumber():
 			end = args_['end']
 			sum_ = analisis_berita.getsum_beritabysumber(start,end)
 			response = app.response_class(
-			        	response=json.dumps(sum_),
+			        	response=json.dumps(sum_,default=str),
 				        status=200,
 				        mimetype='application/json')
 			return response
@@ -100,7 +107,7 @@ def gettop_tags():
 			tags = analisis_berita.get_tag(start,end,5)
 			
 			response = app.response_class(
-			        	response=json.dumps(tags),
+			        	response=json.dumps(tags,default=str),
 				        status=200,
 				        mimetype='application/json')
 			return response
@@ -138,7 +145,7 @@ def getdaily_sumber():
 			daily_sumber = analisis_berita.getdaily_beritabysumber(start,end)
 			
 			response = app.response_class(
-			        	response=json.dumps(daily_sumber),
+			        	response=json.dumps(daily_sumber,default=str),
 				        status=200,
 				        mimetype='application/json')
 			return response
@@ -169,7 +176,7 @@ def getdaily_indikator():
 			ind_ = args_['ind']
 			dai_ind = analisis_berita.getdaily_beritabyindikator(start,end,ind_)
 			response = app.response_class(
-				response=json.dumps(dai_ind),
+				response=json.dumps(dai_ind,default=str),
 				status=200,
 				mimetype='application/json')
 			return response
@@ -233,7 +240,7 @@ def getsum_ner():
 		'sentimen':sentimen
 		}
 		response = app.response_class(
-			response=json.dumps(hasil),
+			response=json.dumps(hasil,default=str),
 			status=200,
 			mimetype='application/json')
 		return response
@@ -286,8 +293,9 @@ def getsum_sentimen():
 		'sentimen':sentimen,
 		'sentimen_kutipan':kutipan
 		}
+		
 		response = app.response_class(
-			response=json.dumps(hasil),
+			response=json.dumps(hasil,default=str),
 			status=200,
 			mimetype='application/json')
 		return response
@@ -299,34 +307,91 @@ def getsum_sentimen():
 def gettweets():
 	
 	args_ = flask.request.args
-	if ('keyword' not in args_) or ('tipe' not in args_):
+	if ('keyword' not in args_):
 		err = app.response_class(
-			        	response=json.dumps({'pesan' : 'maaf argumen keyword / tipe tidak ada'}),
+			        	response=json.dumps({'pesan' : 'maaf argumen kategori / indikator tidak ada'}),
 				        status=200,
 				        mimetype='application/json')
 		return err
-	
+	tanggal_list = [(datetime.now()-timedelta(i))for i in range(7)]
+	keyword = args_['keyword']
 	try:
 		tipe = int(args_['tipe'])
-		keyword = args_['keyword']
 	except:
-		err = app.response_class(
-			        	response=json.dumps({'pesan' : 'maaf argumen keyword / tipe tidak sesuai format'}),
-				        status=200,
-				        mimetype='application/json')
-		return err
+		tipe = 1
+	i = 0
+	#hasil_list = []
+	jumlah_harian = []
+	lokasi = []
+	list_hasil = []
+	with ThreadPoolExecutor(max_workers=7) as executor:
+		for tanggal in tanggal_list:
+			
+			future = executor.submit(gettweets_bykeyword,keyword,1,False,0,keyword,tanggal)
+			list_hasil.append(future)
+		future_pop = executor.submit(gettweets_bykeyword,keyword,1,False,6,keyword)
+		future_popular_today = executor.submit(gettweets_bykeyword,keyword,1,False,0,keyword)
+	for i in range(len(list_hasil)):
+		
+		
+		hasil = list_hasil[i].result()
+		for h in hasil:
+			if (str(h.provinsi) != 'None') and (len(str(h.provinsi))>2):
+				lokasi.append(h.provinsi)
+		harian = {
+		'tanggal':tanggal_list[-i],
+		'jumlah':len(hasil)
+		}
+		jumlah_harian.append(harian)
+	jumlah_harian = sorted(jumlah_harian, key=itemgetter('tanggal'), reverse=False)
+	lokasi = Counter(lokasi)
+	popular = future_pop.result()
+	popular = [p.__dict__ for p in popular]
+	popular = list({p['status_text'] : p for p in popular}.values())
+	popular = sorted(popular, key=itemgetter('status_retweets'), reverse=True)[0:10]
 	
-	tanggal = datetime.now() - timedelta(1)
-	hasil = gettweets_bykeyword(keyword,tipe,False,0,keyword,tanggal)
-	hasil = [h.__dict__ for h in hasil]
+	popular_today = future_popular_today.result()
+	popular_today = [p.__dict__ for p in popular_today]
+	popular_today = list({p['status_text'] : p for p in popular_today}.values())
+	popular_today = sorted(popular_today, key=itemgetter('status_retweets'), reverse=True)[0:10]
+	
+	hasil = {
+	'jumlah_harian':jumlah_harian,
+	'popular':popular,
+	'popular_today':popular_today,
+	'lokasi':lokasi
+	}
+
 	response = app.response_class(
-			response=json.dumps(hasil),
+			response=json.dumps(hasil,default=str),
 			status=200,
 			mimetype='application/json')
 	return response
 
 
-
+@app.route('/twitter/monitor',methods=['GET'])
+def getmonitor():
+	err = app.response_class(
+			        	response=json.dumps({'pesan' : 'maaf argumen format request tidak sesuai'}),
+				        status=200,
+				        mimetype='application/json')
+	args_ = flask.request.args
+	if 'monitor' in args_:
+		#do
+		request = {'indikator':0,'covid':1}
+		client_req = args_['monitor']
+		if client_req in request:
+			hasil = analisis(request[client_req])
+			response = app.response_class(
+				response=json.dumps(hasil),
+				status=200,
+				mimetype='application/json')
+			return response
+		else :
+			return err
+	else:
+		
+		return err
 
 if __name__ == '__main__':
 	#serve(app,port=5000)
