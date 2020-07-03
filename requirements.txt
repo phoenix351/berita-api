@@ -3,3 +3,5 @@ Flask==1.0.2
 Flask-Cors==3.0.7
 db-sqlite3==0.0.1
 tweepy==3.8.0
+spacy==2.0.18
+mysql-connector==2.2.9

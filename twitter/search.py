@@ -50,10 +50,10 @@ def gettweets_bykeyword(keyword,tipe,save=False,rentang=0,kategori="",tanggal=da
 	kategori = kategori identifier
 	"""
 	t_ = ['popular','recent','mixed']
-	tipe = t_[int(tipe)]
+	tipe = t_[int(1)]
 	
 	pop =[]
-	sejak_dt = tanggal-timedelta(rentang)
+	sejak_dt = tanggal-timedelta(6)
 	sampai_dt = sejak_dt+timedelta(1)
 
 	sejak = (sejak_dt).strftime('%Y-%m-%d')
