@@ -9,9 +9,9 @@ import numpy as np
 import os
 
 path = os.path.abspath('twitter/')
-kabkot = pd.read_csv(path+"as.csv",engine='python',header=None)
+kabkot = pd.read_csv(path+"/as.csv",engine='python',header=None)
 kabkot.columns = ['kode_kab','kode_prov','nama_kab']
-prov = pd.read_csv(path+"prov.csv",engine='python',header=None)
+prov = pd.read_csv(path+"/prov.csv",engine='python',header=None)
 prov.columns = ['kode_prov','nama_prov']
 prov_dict = prov.set_index('kode_prov').to_dict()['nama_prov']
 kabkot.nama_kab = kabkot.nama_kab.apply(lambda x : x.replace('KABUPATEN ','').replace('KOTA ',''))
